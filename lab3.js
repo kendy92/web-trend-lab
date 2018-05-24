@@ -1,5 +1,6 @@
 //define global variable
 var map;
+var geocoder;
 var addresses = [];
 var mapMarkers = [];
 var Toronto = { lat: 43, lng: -79.38 };
@@ -27,24 +28,34 @@ $.ajax({
         }
     }
 });
-function addMarker() {
-    //loop through map markers
+/* add GEOCODER function to get long and lat from Google */
+function codeAddress() {
+    // loop through Array of MapMarkers
     for (var _i = 0, mapMarkers_1 = mapMarkers; _i < mapMarkers_1.length; _i++) {
         var i = mapMarkers_1[_i];
-        //assign latlng to new variable
-        var places = { lat: i.LatLng.lat, lng: i.LatLng.lng };
-        //create map markers
-        var marker = new google.maps.Marker({
-            position: places,
-            map: map,
-            title: i.address
+        var address = i.Address + 'Toronto, Canada';
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
+                var y = results_1[_i];
+                if (status == 'OK') {
+                    map.setCenter(y.geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: y.geometry.location
+                    });
+                }
+                else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            }
         });
     }
 }
 function initMap() {
+    geocoder = new google.maps.Geocoder();
     map = new google.maps.Map(document.getElementById("map"), {
         center: Toronto,
         zoom: 8
     });
-    setTimeout(addMarker, 200);
+    setTimeout(codeAddress, 2000);
 }
