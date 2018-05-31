@@ -1,0 +1,52 @@
+html{
+    box-sizing: border-box;
+    padding:0; margin:0;
+}
+
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+
+body{
+    -webkit-font-smoothing: antialiased;
+    font-size:1em;
+
+}
+
+ul, li{
+    list-style-type: none;
+}
+
+ul.parent-menu { /* menu level 1 */
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+    width: 500px;
+}
+
+ul.parent-menu li {
+    flex: 1 1 auto;
+    cursor:pointer;
+}
+
+ul.parent-menu li ul.child-menu { /* menu level 2 */
+    display:none;
+    flex-flow:column wrap;  
+
+}
+
+ul.child-menu li {
+    position: relative;
+}
+
+ul.child-menu li ul.sub-menu { /* menu level 3 */
+    display:none;
+    flex-flow: column wrap;
+    position: absolute;
+    top :0;
+    left: 10px;
+}
+
+ul.parent-menu li:hover ul.child-menu, ul.child-menu li:hover ul.sub-menu {
+    display:flex;
+}
