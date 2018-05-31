@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+html{
+    box-sizing: border-box;
+    padding:0; margin:0;
+}
+
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+
+body{
+    -webkit-font-smoothing: antialiased;
+    font-size:1em;
+
+}
+
+ul, li{
+    list-style-type: none;
+}
+
+ul.parent-menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+    width: 500px;
+
+    & li {
+        flex: 1 1 auto;
+        cursor:pointer;
+    }
+
+    & ul.child-menu {
+        display:none;
+        flex-flow:column wrap;  
+    }
+
+    & li {
+        position: relative;
+    }
+
+    & ul.sub-menu {
+        display:none;
+        flex-flow: column wrap;
+        position: absolute;
+        top :0;
+        left: 10px;
+    }
+}
+
+ul.parent-menu li:hover ul.child-menu, ul.child-menu li:hover ul.sub-menu {
+    display:flex;
+}
